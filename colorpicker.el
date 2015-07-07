@@ -39,11 +39,19 @@
       (goto-char (point-min))
       (buffer-substring-no-properties (point) (line-end-position)))))
 
+(defun colorpicker--bounds ()
+  (let ((bounds (bounds-of-thing-at-point 'symbol)))
+    (when bounds
+      (save-excursion
+        (goto-char (car bounds))
+        (when (= (char-before) ?#)
+          (cons (1- (car bounds)) (cdr bounds)))))))
+
 ;;;###autoload
 (defun colorpicker ()
   (interactive)
   (let ((color (thing-at-point 'symbol))
-        (bounds (bounds-of-thing-at-point 'symbol)))
+        (bounds (colorpicker--bounds)))
     (let ((picked-color (colorpicker--pick-color color)))
       (when bounds
         (goto-char (car bounds))
