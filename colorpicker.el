@@ -53,10 +53,11 @@
   (let ((color (thing-at-point 'symbol))
         (bounds (colorpicker--bounds)))
     (let ((picked-color (colorpicker--pick-color (concat "#" color))))
-      (when bounds
-        (goto-char (car bounds))
-        (delete-region (point) (cdr bounds)))
-      (insert picked-color))))
+      (unless (string= "" picked-color)
+        (when bounds
+          (goto-char (car bounds))
+          (delete-region (point) (cdr bounds)))
+        (insert picked-color)))))
 
 (provide 'colorpicker)
 
