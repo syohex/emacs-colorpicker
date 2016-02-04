@@ -52,7 +52,7 @@
   (interactive)
   (let ((color (thing-at-point 'symbol))
         (bounds (colorpicker--bounds)))
-    (let ((picked-color (colorpicker--pick-color color)))
+    (let ((picked-color (colorpicker--pick-color (concat "#" color))))
       (when bounds
         (goto-char (car bounds))
         (delete-region (point) (cdr bounds)))
